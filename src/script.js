@@ -9,6 +9,10 @@ document.addEventListener("DOMContentLoaded", function(){
         .replace("×", "*")
         .replace("÷", "/")
         .replace("%", "*0.01")
+        .replace('sin', 'Math.sin')
+        .replace('ln', 'Math.log')
+        .replace('π', 'Math.PI')
+        .replace('cos', 'Math.cos')
         const result = eval(convertedValue);
         currValue = result.toString();
         display.value = currValue;
@@ -19,18 +23,26 @@ document.addEventListener("DOMContentLoaded", function(){
         button.addEventListener('click', function() {
             const value = button.innerText;
 
-            if (value == "AC") {
-                currValue = "";
-                display.value = currValue;
+            try {
+                if (value == "AC") {
+                    currValue = "";
+                    display.value = currValue;
+                }
+                else if (value == "=") {
+                    evaluateResult();
+                }
+    
+                else{
+                    currValue += value
+                    display.value = currValue
+                }
             }
-            else if (value == "=") {
-                evaluateResult();
-            }
-
-            else{
-                currValue += value
+            catch (error){
+                console.error(error)
+                currValue = 'ERROR'
                 display.value = currValue
             }
+            
         })
     }
 });
